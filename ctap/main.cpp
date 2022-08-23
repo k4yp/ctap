@@ -10,41 +10,13 @@
 
 #define PI        3.14159265358979323846
 
-//time
-struct
-{
-	//frame 1, frame 2 to create constant frame rate
-	int fr1, fr2;
-}T;
+struct Time T;
 
-//keys
-struct
-{
-	// player look left, right, up, down
-	int j, k, h, l;
-	
-	//player move forwards, backwards, left, right
-	int w, s, a, d;
-	
-	//player move up, down
-	int z, x;
+struct Keys K;
 
-}K;
+struct Math M;
 
-//math
-struct
-{
-	float cos[360];
-	float sin[360];
-}M;
-
-//player
-struct
-{
-	int x, y, z;
-	int a;
-	int l;
-}P;
+struct Player P;
 
 void drawPixel(int x, int y, int r, int g, int b)
 {
@@ -86,7 +58,7 @@ void movePlayer()
 	int dy = M.cos[P.a] * 2.0;
 	
 	//player move forwards, backwards, left, right
-	if (K.w == 1) 
+	if (K.w == 1)
 	{
 		P.x += dx;
 		P.y += dy;
@@ -197,7 +169,6 @@ void drawWall(int x1,int x2, int b1, int b2, int t1, int t2)
 		}
 	}
 }
-
 
 void clipBehindPlayer(int *x1, int *y1, int *z1, int x2, int y2, int z2)
 {
