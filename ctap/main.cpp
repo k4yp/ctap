@@ -1,7 +1,7 @@
 #include "libs.h"
 
-#define SW         852             //screen width
-#define SH         480             //screen height
+#define SW         480             //screen width
+#define SH         360             //screen height
 #define SW2        (SW/2)          //half of screen width
 #define SH2        (SH/2)          //half of screen height
 #define pixelScale 2               //OpenGL pixel scale
@@ -193,9 +193,8 @@ void drawWall(int x1,int x2, int b1, int b2, int t1, int t2)
 
 		for (y = y1; y < y2; y++) 
 		{
-			drawPixel(x, y, 0, 255, 0);
+			drawPixel(x, y, 0, 1, 0);
 		}
-
 	}
 }
 
@@ -252,10 +251,6 @@ void draw3D()
 	wz[2] = wz[0] + 40;
 	wz[3] = wz[1] + 40;
 
-	if (wy[0] < 1 && wy[1] < 1) 
-	{
-		return;
-	}
 
 	if (wy[0] < 1)
 	{
@@ -279,7 +274,7 @@ void draw3D()
 	wx[2] = wx[2] * 200 / wy[2] + SW2;
 	wy[2] = wz[2] * 200 / wy[2] + SH2;
 
-	wx[3] = wx[3] * 200 / wy[3] + SW2;
+	wx[3] = wx[3] * 100 / wy[3] + SW2;
 	wy[3] = wz[3] * 200 / wy[3] + SH2;
 
 	drawWall(wx[0], wx[1], wy[0], wy[1], wy[2], wy[3]);
