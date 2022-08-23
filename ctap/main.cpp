@@ -75,11 +75,11 @@ void movePlayer()
 	}
 	if (K.j == 1)
 	{
-		P.l -= 1;
+		P.l -= 4;
 	}
 	if (K.k == 1)
 	{
-		P.l += 1;
+		P.l += 4;
 	}
 
 	int dx = M.sin[P.a] * 10.0;
@@ -198,7 +198,7 @@ void display()
 {
 	if (T.fr1 - T.fr2 >= 50)
 	{
-		glClearColor(0, 0, 0, 1.0f);
+		glClearColor(1, 1, 1, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		movePlayer();
 		draw3D();
