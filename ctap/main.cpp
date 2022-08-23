@@ -59,7 +59,7 @@ void movePlayer()
 	// player look left, right, up, down
 	if (K.h == 1)
 	{
-		P.a -= 4;
+		P.a -= 1;
 		if (P.a < 0)
 		{
 			P.a += 360;
@@ -67,7 +67,7 @@ void movePlayer()
 	}
 	if (K.l == 1)
 	{
-		P.a += 4;
+		P.a += 1;
 		if (P.a > 359)
 		{
 			P.a -= 360;
@@ -75,21 +75,21 @@ void movePlayer()
 	}
 	if (K.j == 1)
 	{
-		P.l -= 4;
+		P.l -= 1;
 	}
 	if (K.k == 1)
 	{
-		P.l += 4;
+		P.l += 1;
 	}
 
-	int dx = M.sin[P.a] * 10.0;
-	int dy = M.cos[P.a] * 10.0;
+	int dx = M.sin[P.a] * 2.0;
+	int dy = M.cos[P.a] * 2.0;
 	
 	//player move forwards, backwards, left, right
 	if (K.w == 1) 
 	{
 		P.x += dx;
-		P.y += dy; 
+		P.y += dy;
 	}
 	if (K.s == 1) 
 	{ 
@@ -110,11 +110,11 @@ void movePlayer()
 	//player move up, down
 	if (K.z == 1)
 	{
-		P.z += 4;
+		P.z += 2;
 	}
 	if (K.x == 1)
 	{
-		P.z -= 4;
+		P.z -= 2;
 	}
 }
 
@@ -287,7 +287,7 @@ void draw3D()
 
 void display()
 {
-	if (T.fr1 - T.fr2 >= 50)
+	if (T.fr1 - T.fr2 >= 8)
 	{
 		glClearColor(0, 0, 0, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
