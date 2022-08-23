@@ -1,6 +1,6 @@
 #include "libs.h"
 
-#define SW         852            //screen width
+#define SW         852             //screen width
 #define SH         480             //screen height
 #define SW2        (SW/2)          //half of screen width
 #define SH2        (SH/2)          //half of screen height
