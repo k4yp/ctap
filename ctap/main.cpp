@@ -1,14 +1,15 @@
 #include "libs.h"
 
-#define SW         640                  //screen width
-#define SH         360                  //screen height
-#define SW2        (SW/2)               //half of screen width
-#define SH2        (SH/2)               //half of screen height
-#define pixelScale 2                    //OpenGL pixel scale
-#define GLSW       (SW*pixelScale)      //OpenGL window width
-#define GLSH       (SH*pixelScale)      //OpenGL window height
+#define scale	   1
+#define SW         640/scale       //screen width
+#define SH         360/scale       //screen height
+#define SW2        (SW/2)          //half of screen width
+#define SH2        (SH/2)          //half of screen height
+#define pixelScale 2*scale         //OpenGL pixel scale
+#define GLSW       (SW*pixelScale) //OpenGL window width
+#define GLSH       (SH*pixelScale) //OpenGL window height
 
-# define PI        3.14159265358979323846
+#define PI        3.14159265358979323846
 
 //time
 struct
@@ -45,53 +46,17 @@ struct
 	int l;
 }P;
 
-void pixel(int x, int y, int color)
+void drawPixel(int x, int y, int r, int g, int b)
 {
-	int rgb[3];
-	//red
-	if (color == 0)
-	{
-		rgb[0] = 255;
-		rgb[1] = 0;
-		rgb[2] = 0;
-	}
-	//green
-	if (color == 1)
-	{
-		rgb[0] = 0;
-		rgb[1] = 255;
-		rgb[2] = 0;
-	}
-	//blue
-	if (color == 2)
-	{
-		rgb[0] = 0;
-		rgb[1] = 0;
-		rgb[2] = 255;
-	}
-	//white
-	if (color == 3)
-	{
-		rgb[0] = 255;
-		rgb[1] = 255;
-		rgb[2] = 255;
-	}
-	//black
-	if (color == 4)
-	{
-		rgb[0] = 0;
-		rgb[1] = 0;
-		rgb[2] = 0;
-	}
 	glBegin(GL_POINTS);
-	glColor3f(rgb[0], rgb[1], rgb[2]);
+	glColor3f(r, g, b);
 	glVertex2i(x * pixelScale + 2, y * pixelScale + 2);
 	glEnd();
 }
 
 void movePlayer()
 {
-	//move up, down, left, right
+	//move up, down
 	if (K.a == 1 && K.m == 0){
 		P.a -= 4;
 		if (P.a < 0) 
@@ -189,19 +154,18 @@ void draw3D()
 	//draw points
 	if (wx[0]>0 && wx[0]<SW && wy[0]>0 && wy[0]<SH)
 	{
-		pixel(wx[0], wy[0], 1);
+		drawPixel(wx[0], wy[0], 0, 255, 0);
 	}
 
 	if (wx[1]>0 && wx[1]<SW && wy[1]>0 && wy[1]<SH)
 	{
-		pixel(wx[1], wy[1], 0);
+		drawPixel(wx[1], wy[1], 255, 0, 0);
 	}
 
 }
 
 void display()
 {
-	int x, y;
 	if (T.fr1 - T.fr2 >= 50)
 	{
 		glClearColor(0, 0, 0, 1.0f);
@@ -284,10 +248,9 @@ void KeysUp(unsigned char key, int x, int y)
 
 void init()
 {
-	int x;
-	for (x = 0; x < 360; x++) {
-		M.cos[x] = cos(x / 180.0 * PI);
-		M.sin[x] = sin(x / 180.0 * PI);
+	for (int i = 0; i < 360; i++) {
+		M.cos[i] = cos(i / 180.0 * PI);
+		M.sin[i] = sin(i / 180.0 * PI);
 	}
 
 	P.x = 70;
