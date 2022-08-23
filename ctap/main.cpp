@@ -132,17 +132,91 @@ void drawWall(int x1,int x2, int b1, int b2, int t1, int t2)
 	}
 	int xs = x1;
 
+	//clip x
+	if (x1 < 1)
+	{
+		x1 = 1;
+	}
+	if (x2 < 1)
+	{
+		x2 = 1;
+	}
+	if (x1 > SW - 1)
+	{
+		x1 = SW-1;
+	}
+	if (x2 > SW - 1)
+	{
+		x2 = SW - 1;
+	}
+
+	//clip x
+	if (x1 < 1)
+	{
+		x1 = 1;
+	}
+	if (x2 < 1)
+	{
+		x2 = 1;
+	}
+	if (x1 > SW - 1)
+	{
+		x1 = SW - 1;
+	}
+	if (x2 > SW - 1)
+	{
+		x2 = SW - 1;
+	}
+
 	for (x = x1; x < x2; x++) 
 	{
 		int y1 = dyb * (x - xs + 0.5) / dx + b1;
 		int y2 = dyt * (x - xs + 0.5) / dx + t1;
 
+		//clip y
+		if (y1 < 1)
+		{
+			y1 = 1;
+		}
+		if (y2 < 1)
+		{
+			y2 = 1;
+		}
+		if (y1 > SW - 1)
+		{
+			y1 = SW - 1;
+		}
+		if (y2 > SW - 1)
+		{
+			y2 = SW - 1;
+		}
+
 		for (y = y1; y < y2; y++) 
 		{
-			drawPixel(x, y, 255, 0, 0);
+			drawPixel(x, y, 0, 255, 0);
 		}
 
 	}
+}
+
+
+void clipBehindPlayer(int *x1, int *y1, int *z1, int x2, int y2, int z2)
+{
+	float da = *y1;
+	float db = y2;
+	float d = da - db;
+	if (d == 0)
+	{
+		d = 1; 
+	}
+	float s = da / (da - db);
+	*x1 = *x1 + s * (x2 - (*x1));
+	*y1 = *y1 + s * (y2 - (*y1)); 
+	if (*y1 == 0)
+	{
+		*y1 = 1; 
+	} 
+	*z1 =  *z1 + s*(z2 - (*z1));
 }
 
 void draw3D()
@@ -178,6 +252,23 @@ void draw3D()
 	wz[2] = wz[0] + 40;
 	wz[3] = wz[1] + 40;
 
+	if (wy[0] < 1 && wy[1] < 1) 
+	{
+		return;
+	}
+
+	if (wy[0] < 1)
+	{
+		clipBehindPlayer(&wx[0], &wy[0], &wz[0], wx[1], wy[1], wz[1]);
+		clipBehindPlayer(&wx[2], &wy[2], &wz[2], wx[3], wy[3], wz[3]);
+	}
+
+	if (wy[1] < 1)
+	{
+		clipBehindPlayer(&wx[1], &wy[1], &wz[1], wx[0], wy[0], wz[0]);
+		clipBehindPlayer(&wx[3], &wy[3], &wz[3], wx[2], wy[2], wz[2]);
+	}
+
 	//screen x, y position
 	wx[0] = wx[0] * 200 / wy[0] + SW2;
 	wy[0] = wz[0] * 200 / wy[0] + SH2;
@@ -198,7 +289,7 @@ void display()
 {
 	if (T.fr1 - T.fr2 >= 50)
 	{
-		glClearColor(1, 1, 1, 1.0f);
+		glClearColor(0, 0, 0, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		movePlayer();
 		draw3D();
