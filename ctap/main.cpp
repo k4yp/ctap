@@ -18,7 +18,7 @@ struct Math M;
 
 struct Player P;
 
-void drawPixel(int x, int y, int r, int g, int b)
+void drawPixel(int x, int y, float r, float g, float b)
 {
 	glBegin(GL_POINTS);
 	glColor3f(r, g, b);
@@ -165,7 +165,7 @@ void drawWall(int x1,int x2, int b1, int b2, int t1, int t2)
 
 		for (y = y1; y < y2; y++) 
 		{
-			drawPixel(x, y, 0, 1, 0);
+			drawPixel(x, y, 0.5, 0.5, 0.0);
 		}
 	}
 }
@@ -255,7 +255,7 @@ void display()
 {
 	if (T.fr1 - T.fr2 >= 8)
 	{
-		glClearColor(0, 0, 0, 1.0f);
+		glClearColor(0.0, 0.0, 0.5, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		movePlayer();
 		draw3D();
