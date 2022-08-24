@@ -90,7 +90,7 @@ void movePlayer()
 	}
 }
 
-void drawWall(int x1,int x2, int b1, int b2, int t1, int t2) 
+void drawWall(int x1, int x2, int b1, int b2, int t1, int t2) 
 {
 	int x, y;
 
@@ -98,6 +98,7 @@ void drawWall(int x1,int x2, int b1, int b2, int t1, int t2)
 	int dyb = b2 - b1;
 	int dyt = t2 - t1;
 	int dx = x2 - x1;
+
 	if (dx == 0)
 	{
 		dx = 1;
@@ -105,62 +106,44 @@ void drawWall(int x1,int x2, int b1, int b2, int t1, int t2)
 	int xs = x1;
 
 	//clip x
-	if (x1 < 1)
+	if (x1 < 0)
 	{
-		x1 = 1;
+		x1 = 0;
 	}
-	if (x2 < 1)
+	if (x2 < 0)
 	{
-		x2 = 1;
+		x2 = 0;
 	}
-	if (x1 > SW - 1)
+	if (x1 > SW)
 	{
-		x1 = SW-1;
+		x1 = SW;
 	}
-	if (x2 > SW - 1)
+	if (x2 > SW)
 	{
-		x2 = SW - 1;
-	}
-
-	//clip x
-	if (x1 < 1)
-	{
-		x1 = 1;
-	}
-	if (x2 < 1)
-	{
-		x2 = 1;
-	}
-	if (x1 > SW - 1)
-	{
-		x1 = SW - 1;
-	}
-	if (x2 > SW - 1)
-	{
-		x2 = SW - 1;
+		x2 = SW;
 	}
 
 	for (x = x1; x < x2; x++) 
 	{
-		int y1 = dyb * (x - xs + 0.5) / dx + b1;
-		int y2 = dyt * (x - xs + 0.5) / dx + t1;
+		int y1 = dyb * (x - xs) / dx + b1;
+		int y2 = dyt * (x - xs) / dx + t1;
 
 		//clip y
-		if (y1 < 1)
+		if (y1 < 0)
 		{
-			y1 = 1;
+			y1 = 0;
 		}
-		if (y2 < 1)
+		if (y2 < 0)
 		{
-			y2 = 1;
+			y2 = 0;
 		}
-		if (y1 > SW - 1)
+		if (y1 > SW)
 		{
-			y1 = SW - 1;
+			y1 = SW;
 		}
-		if (y2 > SW - 1)
+		if (y2 > SW)
 		{
-			y2 = SW - 1;
+			y2 = SW;
 		}
 
 		for (y = y1; y < y2; y++) 
@@ -186,7 +169,7 @@ void clipBehindPlayer(int *x1, int *y1, int *z1, int x2, int y2, int z2)
 	{
 		*y1 = 1; 
 	} 
-	*z1 =  *z1 + s*(z2 - (*z1));
+	*z1 = *z1 + s*(z2 - (*z1));
 }
 
 void draw3D()
@@ -222,6 +205,10 @@ void draw3D()
 	wz[2] = wz[0] + 40;
 	wz[3] = wz[1] + 40;
 
+	if (wy[0] < 1 && wy[1] < 1)
+	{
+		return;
+	}
 
 	if (wy[0] < 1)
 	{
@@ -245,7 +232,7 @@ void draw3D()
 	wx[2] = wx[2] * 200 / wy[2] + SW2;
 	wy[2] = wz[2] * 200 / wy[2] + SH2;
 
-	wx[3] = wx[3] * 100 / wy[3] + SW2;
+	wx[3] = wx[3] * 200 / wy[3] + SW2;
 	wy[3] = wz[3] * 200 / wy[3] + SH2;
 
 	drawWall(wx[0], wx[1], wy[0], wy[1], wy[2], wy[3]);
